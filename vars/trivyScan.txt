@@ -1,0 +1,43 @@
+This library provides functions to scan Docker images for vulnerabilities using Trivy
+and generate multiple report formats (JSON, HTML, JUnit XML).
+
+Functions
+---------
+
+1. vulnerabilityScan(String imageName)
+   - Scans the given image for vulnerabilities.
+   - LOW, MEDIUM, HIGH severities are written to: trivy-image-HIGH-results.json
+   - CRITICAL severity is written to: trivy-image-CRITICAL-results.json
+   - Fails the pipeline if CRITICAL vulnerabilities are found (exit code 1).
+
+   Usage:
+     vulnerabilityScan("nginx:latest")
+
+2. reportsConverter()
+   - Converts the JSON results into HTML and JUnit XML reports.
+   - Produces the following files:
+       - trivy-image-HIGH-results.html
+       - trivy-image-CRITICAL-results.html
+       - trivy-image-HIGH-results.xml
+       - trivy-image-CRITICAL-results.xml
+
+   Usage:
+     reportsConverter()
+
+Example in pipeline:
+--------------------
+pipeline {
+    agent any
+    stages {
+        stage('Vulnerability Scan') {
+            steps {
+                vulnerabilityScan("nginx:latest")
+            }
+        }
+        stage('Generate Reports') {
+            steps {
+                reportsConverter()
+            }
+        }
+    }
+}
