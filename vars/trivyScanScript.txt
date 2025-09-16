@@ -17,7 +17,11 @@ Example:
       stages {
           stage('Vulnerability Scan') {
               steps {
-                  vulnerabilityScan(imageName: "nginx:latest")
+                  vulnerabilityScan(
+                    imageName: "nginx:latest"
+                    severity: 'CRITICAL'
+                    exitCode: 1
+                    )
               }
           }
       }
