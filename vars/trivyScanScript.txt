@@ -5,6 +5,10 @@ Usage:
 
 Arguments:
   imageName - The name of the container image to scan.
+  severity  - Comma-separated severity levels to include in the scan (e.g., LOW,MEDIUM,HIGH,CRITICAL).
+  exitCode  - Exit code behavior:
+                0 = Do not fail the pipeline on findings.
+                1 = Fail the pipeline if vulnerabilities are found.
 
 Behavior:
   - Loads the trivy.sh script from the shared library (resources/scripts/).
@@ -19,7 +23,7 @@ Example:
               steps {
                   vulnerabilityScan(
                     imageName: "nginx:latest"
-                    severity: 'CRITICAL'
+                    severity: "CRITICAL"
                     exitCode: 1
                     )
               }
