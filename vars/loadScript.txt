@@ -1,0 +1,25 @@
+This step loads a script from the shared library resources, writes it to the workspace, and makes it executable.
+
+Usage:
+  loadScript(name: "<script-filename>")
+
+Arguments:
+  name - The name of the script located under resources/scripts/
+
+Behavior:
+  - Fetches the script from resources/scripts/<name>
+  - Writes it to a file in the workspace with the same name
+  - Adds execute permission (chmod +x)
+
+Example:
+  pipeline {
+      agent any
+      stages {
+          stage('Load and Run Script') {
+              steps {
+                  loadScript(name: "myscript.sh")
+                  sh "./myscript.sh"
+              }
+          }
+      }
+  }
