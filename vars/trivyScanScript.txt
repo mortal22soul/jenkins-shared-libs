@@ -1,7 +1,7 @@
 This step runs a Trivy vulnerability scan on a container image using a custom shell script.
 
 Usage:
-  vulnerabilityScan(imageName: "<image-name>")
+  trivyScanScript.vulnerabilityScan(imageName: "<image-name>", severity: "<severity-levels>", exitCode: <code>)
 
 Arguments:
   imageName - The name of the container image to scan.
@@ -12,8 +12,8 @@ Arguments:
 
 Behavior:
   - Loads the trivy.sh script from the shared library (resources/scripts/).
-  - Executes: ./trivy.sh <imageName> <imageName> <imageName>
-    (The script can use these arguments for scanning and report generation.)
+  - Executes: ./trivy.sh <imageName> <severity> <exitCode>
+    (The script uses these arguments for scanning and report generation.)
 
 Example:
   pipeline {
@@ -21,11 +21,13 @@ Example:
       stages {
           stage('Vulnerability Scan') {
               steps {
-                  vulnerabilityScan(
-                    imageName: "nginx:latest"
-                    severity: "CRITICAL"
+                script{
+                  trivyScanScript.vulnerabilityScan(
+                    imageName: "nginx:latest",
+                    severity: "CRITICAL",
                     exitCode: 1
-                    )
+                  )
+                }
               }
           }
       }

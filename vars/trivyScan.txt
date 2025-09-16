@@ -11,7 +11,7 @@ Functions
    - Fails the pipeline if CRITICAL vulnerabilities are found (exit code 1).
 
    Usage:
-     vulnerabilityScan("nginx:latest")
+     trivyScan.vulnerabilityScan("nginx:latest")
 
 2. reportsConverter()
    - Converts the JSON results into HTML and JUnit XML reports.
@@ -22,7 +22,7 @@ Functions
        - trivy-image-CRITICAL-results.xml
 
    Usage:
-     reportsConverter()
+     trivyScan.reportsConverter()
 
 Example in pipeline:
 --------------------
@@ -31,12 +31,16 @@ pipeline {
     stages {
         stage('Vulnerability Scan') {
             steps {
-                vulnerabilityScan("nginx:latest")
+                script{
+                    trivyScan.vulnerabilityScan("nginx:latest")
+                }
             }
         }
         stage('Generate Reports') {
             steps {
-                reportsConverter()
+                script{
+                    trivyScan.reportsConverter()
+                }
             }
         }
     }
