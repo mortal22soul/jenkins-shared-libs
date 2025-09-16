@@ -1,0 +1,15 @@
+This step prints a hello message in the Jenkins console.
+
+Usage:
+  hello()
+
+Example:
+  pipeline {
+      stages {
+          stage('Hello') {
+              steps {
+                  hello()
+              }
+          }
+      }
+  }

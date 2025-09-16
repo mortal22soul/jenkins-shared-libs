@@ -1,0 +1,18 @@
+This step sends a Slack notification with the build status.
+
+Usage:
+  slackNotification([buildStatus: 'SUCCESS' | 'UNSTABLE' | 'FAILURE'])
+
+Default:
+  buildStatus = 'STARTED'
+
+Example:
+  pipeline {
+      stages {
+          stage('Notify') {
+              steps {
+                  slackNotification(buildStatus: 'SUCCESS')
+              }
+          }
+      }
+  }
